@@ -32,7 +32,7 @@
     <div class="form-group">
         <label for="content">Contenuto</label>
         
-        <textarea name="content" cols="30" rows="10" class="form-control @error('title') is-invalid @enderror" placeholder="Scrivi qui..." required>value="{{ old("content") }}"</textarea>
+        <textarea name="content" cols="30" rows="10" class="form-control @error('title') is-invalid @enderror" placeholder="Scrivi qui..." required>{{ old("content") }}</textarea>
         
         @error("content")
             <div class="invalid-feedback">{{ $message }}</div>

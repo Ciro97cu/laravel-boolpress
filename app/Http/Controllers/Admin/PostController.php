@@ -37,10 +37,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "title" => "required|max:255",
-            "content" => "required"
-        ]);
+        $request->validate(
+            [
+                "title" => "required|max:255",
+                "content" => "required"
+            ],
+            [
+                "title.required" => "The title is rquired",
+                "title.max" => "First of all, Respect the rules",
+                "content.required" => "The content is rquired",
+            ]
+        );
         $postData = $request->all();
         $newPost = new Post();
         $newPost->fill($postData);
@@ -80,10 +87,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $request->validate([
-            "title" => "required|max:255",
-            "content" => "required"
-        ]);
+        $request->validate(
+            [
+                "title" => "required|max:255",
+                "content" => "required"
+            ],
+            [
+                "title.required" => "The title is rquired",
+                "title.max" => "First of all, Respect the rules",
+                "content.required" => "The content is rquired",
+            ]
+        );
         $postData = $request->all();
         $post->fill($postData);
         $post->slug = Post::generateSlug($post->title);

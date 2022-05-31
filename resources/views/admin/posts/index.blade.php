@@ -27,7 +27,14 @@
                 <td>
                     <a class="btn btn-info" href="{{ route("admin.posts.show", $post->id) }}">Dettaglio</a>
                     <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
-                    <a class="btn btn-danger" >Elimina</a>
+                    <form class="d-inline-block" action="{{route('admin.posts.destroy' ,  $post->id)}}" method="POST">
+                        @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger" onclick="return confirm('Are you sure you wanna delete the Post?');">
+                                Delete
+                            </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

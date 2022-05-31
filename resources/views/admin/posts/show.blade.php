@@ -16,7 +16,7 @@
     <p>{{$post->slug}}</p>
     <h3>Contenuto</h3>
     <p>{{$post->content}}</p>
-    <a class="btn btn-warning" href="">Modifica</a>
+    <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
     <a class="btn btn-danger" href="">Elimina</a>
 </div>
 @endsection

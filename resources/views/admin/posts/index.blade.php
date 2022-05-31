@@ -26,8 +26,8 @@
                 <td>{{$post->slug}}</td>
                 <td>
                     <a class="btn btn-info" href="{{ route("admin.posts.show", $post->id) }}">Dettaglio</a>
-                    <a class="btn btn-warning" href="">Modifica</a>
-                    <a class="btn btn-danger" href="">Elimina</a>
+                    <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
+                    <a class="btn btn-danger" >Elimina</a>
                 </td>
             </tr>
         @endforeach

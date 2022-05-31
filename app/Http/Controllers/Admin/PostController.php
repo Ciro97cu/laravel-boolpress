@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -45,16 +44,7 @@ class PostController extends Controller
         $postData = $request->all();
         $newPost = new Post();
         $newPost->fill($postData);
-        $slug = Str::slug($newPost->title);
-        $alternativeSlug = $slug;
-        $postFound = Post::where("slug", $slug)->first();
-        $counter = 1;
-        while ($postFound) {
-            $alternativeSlug = $slug . "_" . $counter;
-            $counter++;
-            $postFound = Post::where("slug", $alternativeSlug)->first();
-        }
-        $newPost->slug = $alternativeSlug;
+        $newPost->slug = Post::generateSlug($newPost->title);
         $newPost->save();
         return redirect()->route("admin.posts.index");
     }
@@ -76,9 +66,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -88,9 +78,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            "title" => "required|max:255",
+            "content" => "required"
+        ]);
+        $postData = $request->all();
+        $post->fill($postData);
+        $post->slug = Post::generateSlug($post->title);
+        $post->update();
+        return redirect()->route("admin.posts.index");
     }
 
     /**

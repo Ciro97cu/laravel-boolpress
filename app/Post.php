@@ -23,4 +23,9 @@ class Post extends Model
         }
         return $alternativeSlug;
     }
+
+    public function category()
+    {
+        return $this->belongsTo("App\Category");
+    }
 }

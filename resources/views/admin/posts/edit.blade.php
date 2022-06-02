@@ -40,6 +40,18 @@
         @enderror
     </div>
     <div class="form-group">
+        <label for="category_id">Categoria</label>
+        <select name="category_id" class="@error('category_id') is-invalid @enderror">
+            <option hidden>Seleziona la categoria</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ $category->id == old("category_id", $post->category_id) ? "selected": "" }}>{{ $category->name }}</option>
+            @endforeach
+        </select>
+        @error("category_id")
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-success">Modifica post</button>
     </div>
 </form>

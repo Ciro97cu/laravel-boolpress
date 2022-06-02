@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -28,8 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        // per il form di creazione ritorno semplicemente la view create
-        return view("admin.posts.create");
+        // per il form di creazione ritorno semplicemente la view create e passo le categorie
+        $categories = Category::all();
+        return view("admin.posts.create", compact("categories"));
     }
 
     /**
@@ -44,12 +46,14 @@ class PostController extends Controller
         $request->validate(
             [
                 "title" => "required|max:255",
-                "content" => "required"
+                "content" => "required",
+                "category_id" => "required|exists:categories,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
+                "category_id.required" => "The category is rquired"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
@@ -72,8 +76,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $category = Category::find($post->category_id);
         // mostro la view show e passo i post
-        return view("admin.posts.show", compact("post"));
+        return view("admin.posts.show", compact("post", "category"));
     }
 
     /**
@@ -84,8 +89,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        // per il form di modifica ritorno semplicemente la view edit
-        return view("admin.posts.edit", compact("post"));
+        // per il form di modifica ritorno semplicemente la view edit e passo le categorie
+        $categories = Category::all();
+        return view("admin.posts.edit", compact("post", "categories"));
     }
 
     /**
@@ -101,12 +107,14 @@ class PostController extends Controller
         $request->validate(
             [
                 "title" => "required|max:255",
-                "content" => "required"
+                "content" => "required",
+                "category_id" => "required|exists:categories,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
+                "category_id.required" => "The category is rquired"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile

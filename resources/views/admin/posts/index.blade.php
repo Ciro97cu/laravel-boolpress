@@ -15,7 +15,7 @@
             <th>ID</th>
             <th>Titolo</th>
             <th>Slug</th>
-            <th class="text/center">Azioni</th>
+            <th class="text-center">Azioni</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
                 <td>{{$post->id}}</td>
                 <td>{{$post->title}}</td>
                 <td>{{$post->slug}}</td>
-                <td>
+                <td class="text-center">
                     <a class="btn btn-info" href="{{ route("admin.posts.show", $post->id) }}">Dettaglio</a>
                     <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
                     <form class="d-inline-block" action="{{route('admin.posts.destroy' ,  $post->id)}}" method="POST">

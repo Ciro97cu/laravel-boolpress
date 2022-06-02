@@ -15,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        // recupero tutti i post e li valorizzo in una variabile 
         $posts = Post::all();
+        // ritorno la view index e passo la variabile precedente
         return view("admin.posts.index", compact("posts"));
     }
 
@@ -26,6 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        // per il form di creazione ritorno semplicemente la view create
         return view("admin.posts.create");
     }
 
@@ -37,6 +40,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // effettuo la validazione sui campi della tabella e imposto anche dei messaggi di errore personalizzati
         $request->validate(
             [
                 "title" => "required|max:255",
@@ -48,11 +52,15 @@ class PostController extends Controller
                 "content.required" => "The content is rquired",
             ]
         );
+        // vado a recuperare tutti i dati e li valorizzo in una variabile
         $postData = $request->all();
         $newPost = new Post();
+        // li inserisco all'interno della tabella, compreso lo slug
         $newPost->fill($postData);
         $newPost->slug = Post::generateSlug($newPost->title);
+        // effettuo il salvataggio
         $newPost->save();
+        // reindirizzo l'utente alla index
         return redirect()->route("admin.posts.index");
     }
 
@@ -64,6 +72,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // mostro la view show e passo i post
         return view("admin.posts.show", compact("post"));
     }
 
@@ -75,6 +84,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        // per il form di modifica ritorno semplicemente la view edit
         return view("admin.posts.edit", compact("post"));
     }
 
@@ -87,6 +97,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // effettuo la validazione sui campi della tabella e imposto anche dei messaggi di errore personalizzati
         $request->validate(
             [
                 "title" => "required|max:255",
@@ -98,10 +109,14 @@ class PostController extends Controller
                 "content.required" => "The content is rquired",
             ]
         );
+        // vado a recuperare tutti i dati e li valorizzo in una variabile
         $postData = $request->all();
+        // li inserisco all'interno della tabella, compreso lo slug
         $post->fill($postData);
         $post->slug = Post::generateSlug($post->title);
+        // effettuo l'update
         $post->update();
+        // reindirizzo l'utente alla index
         return redirect()->route("admin.posts.index");
     }
 
@@ -113,6 +128,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // per la cancellazione del post eseguo direttamente il delete e reindirizzo l'utente alla index
         $post->delete();
         return redirect()->route("admin.posts.index");
     }

@@ -17,7 +17,7 @@
     <h3>Contenuto</h3>
     <p>{{$post->content}}</p>
     <h3>Categoria</h3>
-    <p>{{$category->name}}</p>
+    <p>{{$post->category->name}}</p>
     <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
     <form class="d-inline-block" action="{{route('admin.posts.destroy' ,  $post->id)}}" method="POST">
         @csrf

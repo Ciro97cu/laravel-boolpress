@@ -50,13 +50,15 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id"
+                "category_id" => "required|exists:categories,id",
+                "tags" => "exists:tags,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired"
+                "category_id.required" => "The category is rquired",
+                "tags" => "Tag non esiste"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
@@ -65,6 +67,9 @@ class PostController extends Controller
         // li inserisco all'interno della tabella, compreso lo slug
         $newPost->fill($postData);
         $newPost->slug = Post::generateSlug($newPost->title);
+        $newPost->save();
+        // aggiungo i tag
+        $newPost->tag()->sync($postData["tags"]);
         // effettuo il salvataggio
         $newPost->save();
         // reindirizzo l'utente alla index

@@ -49,6 +49,17 @@
         @enderror
     </div>
     <div class="form-group">
+        <h3>Tags</h3>
+        @foreach ($tags as $tag)
+        <input type="checkbox" value="{{$tag->id}}" name="tags[]" class="@error('tags') is-invalid @enderror"
+        {{ in_array($tag->id, old("tags", [])) ? "checked" : "" }}/>
+        <label class="mr-3">{{$tag->name}}</label>
+        @endforeach
+        @error("tags")
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-success">Crea post</button>
     </div>
 </form>

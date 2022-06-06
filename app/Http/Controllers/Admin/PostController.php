@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -29,9 +30,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        // per il form di creazione ritorno semplicemente la view create e passo le categorie
+        // per il form di creazione ritorno semplicemente la view create e passo le categorie e i tag
         $categories = Category::all();
-        return view("admin.posts.create", compact("categories"));
+        $tags = Tag::all();
+
+        return view("admin.posts.create", compact("categories", "tags"));
     }
 
     /**

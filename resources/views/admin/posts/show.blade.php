@@ -20,12 +20,16 @@
     <p>{{$post->category->name}}</p>
     <h3>Tags</h3>
     <p>
-        @foreach ($post->tag as $tag)
-            {{$tag->name}}
-            @if (!$loop->last)
-                ~
-            @endif
-        @endforeach    
+        @if ($post->tag->isEmpty())
+            No tags
+            @else
+            @foreach ($post->tag as $tag)
+                {{$tag->name}}
+                @if (!$loop->last)
+                    ~
+                @endif
+            @endforeach   
+        @endif
     </p>
     <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>
     <form class="d-inline-block" action="{{route('admin.posts.destroy' ,  $post->id)}}" method="POST">

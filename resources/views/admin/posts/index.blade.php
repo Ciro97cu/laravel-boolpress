@@ -28,12 +28,16 @@
                 <td>{{$post->slug}}</td>
                 <td>{{$post->category->name}}</td>
                 <td>
-                    @foreach ($post->tag as $tag)
-                        {{$tag->name}}
-                        @if (!$loop->last)
-                            ~
-                        @endif
-                    @endforeach   
+                    @if ($post->tag->isEmpty())
+                        No tags
+                        @else
+                        @foreach ($post->tag as $tag)
+                            {{$tag->name}}
+                            @if (!$loop->last)
+                                ~
+                            @endif
+                        @endforeach   
+                    @endif
                 </td>
                 <td class="text-center">
                     <a class="btn btn-info" href="{{ route("admin.posts.show", $post->id) }}">Dettaglio</a>

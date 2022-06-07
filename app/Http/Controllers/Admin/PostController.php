@@ -97,9 +97,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        // per il form di modifica ritorno semplicemente la view edit e passo le categorie
+        // per il form di modifica ritorno semplicemente la view edit e passo le categorie e i tag
         $categories = Category::all();
-        return view("admin.posts.edit", compact("post", "categories"));
+        $tags = Tag::all();
+        return view("admin.posts.edit", compact("post", "categories", "tags"));
     }
 
     /**
@@ -116,13 +117,15 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id"
+                "category_id" => "required|exists:categories,id",
+                "tags" => "exists:tags,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired"
+                "category_id.required" => "The category is rquired",
+                "tags" => "Tag non esiste"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
@@ -130,6 +133,8 @@ class PostController extends Controller
         // li inserisco all'interno della tabella, compreso lo slug
         $post->fill($postData);
         $post->slug = Post::generateSlug($post->title);
+        // modifico i tag
+        $post->tag()->sync($request["tags"]);
         // effettuo l'update
         $post->update();
         // reindirizzo l'utente alla index
@@ -145,6 +150,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         // per la cancellazione del post eseguo direttamente il delete e reindirizzo l'utente alla index
+        $post->tag()->sync([]);
         $post->delete();
         return redirect()->route("admin.posts.index");
     }

@@ -16,6 +16,7 @@
             <th>Titolo</th>
             <th>Slug</th>
             <th>Categoria</th>
+            <th>Tags</th>
             <th class="text-center">Azioni</th>
         </tr>
     </thead>
@@ -26,6 +27,14 @@
                 <td>{{$post->title}}</td>
                 <td>{{$post->slug}}</td>
                 <td>{{$post->category->name}}</td>
+                <td>
+                    @foreach ($post->tag as $tag)
+                        {{$tag->name}}
+                        @if (!$loop->last)
+                            ~
+                        @endif
+                    @endforeach   
+                </td>
                 <td class="text-center">
                     <a class="btn btn-info" href="{{ route("admin.posts.show", $post->id) }}">Dettaglio</a>
                     <a class="btn btn-warning" href="{{ route("admin.posts.edit", $post->id) }}">Modifica</a>

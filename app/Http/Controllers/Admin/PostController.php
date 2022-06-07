@@ -50,15 +50,13 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id",
-                "tags" => "exists:tags,id"
+                "category_id" => "required|exists:categories,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired",
-                "tags" => "Tag non esiste"
+                "category_id.required" => "The category is rquired"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
@@ -117,15 +115,13 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id",
-                "tags" => "exists:tags,id"
+                "category_id" => "required|exists:categories,id"
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired",
-                "tags" => "Tag non esiste"
+                "category_id.required" => "The category is rquired"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile

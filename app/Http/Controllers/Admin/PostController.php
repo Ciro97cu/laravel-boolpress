@@ -67,9 +67,10 @@ class PostController extends Controller
         // li inserisco all'interno della tabella, compreso lo slug
         $newPost->fill($postData);
         $newPost->slug = Post::generateSlug($newPost->title);
+        // dd($postData);
         $newPost->save();
         // aggiungo i tag
-        $newPost->tag()->sync($postData["tags"]);
+        $newPost->tag()->sync($request["tags"]);
         // effettuo il salvataggio
         $newPost->save();
         // reindirizzo l'utente alla index

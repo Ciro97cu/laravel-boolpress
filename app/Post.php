@@ -8,7 +8,14 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    protected $guarded = [];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = "posts";
+
+    protected $fillable = ['title', 'content', 'slug', 'category_id',];
 
     public static function generateSlug($title)
     {

@@ -15,7 +15,8 @@ class Post extends Model
      */
     protected $table = "posts";
 
-    protected $fillable = ['title', 'content', 'slug', 'category_id',];
+    // protected $fillable = ['title', 'content', 'slug', 'category_id',];
+    protected $guarded = [""];
 
     public static function generateSlug($title)
     {

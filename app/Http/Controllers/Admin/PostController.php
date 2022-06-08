@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -50,27 +51,28 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id"
+                "category_id" => "required|exists:categories,id",
+                'image' => 'required|mimes:jpg,png,jpeg|max:2048'
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired"
+                "category_id.required" => "The category is rquired",
+                "image" => "Il file deve essere un'immagine"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
         $postData = $request->all();
+        $img_path = Storage::put("uploads", $postData["image"]);
+        $postData["cover"] = $img_path;
         $newPost = new Post();
         // li inserisco all'interno della tabella, compreso lo slug
         $newPost->fill($postData);
         $newPost->slug = Post::generateSlug($newPost->title);
-        // dd($postData);
         $newPost->save();
         // aggiungo i tag
         $newPost->tag()->sync($request["tags"]);
-        // effettuo il salvataggio
-        $newPost->save();
         // reindirizzo l'utente alla index
         return redirect()->route("admin.posts.index");
     }
@@ -115,17 +117,22 @@ class PostController extends Controller
             [
                 "title" => "required|max:255",
                 "content" => "required",
-                "category_id" => "required|exists:categories,id"
+                "category_id" => "required|exists:categories,id",
+                'image' => 'required|mimes:jpg,png,jpeg|max:2048'
             ],
             [
                 "title.required" => "The title is rquired",
                 "title.max" => "First of all, Respect the rules",
                 "content.required" => "The content is rquired",
-                "category_id.required" => "The category is rquired"
+                "category_id.required" => "The category is rquired",
+                "image" => "Il file deve essere un'immagine"
             ]
         );
         // vado a recuperare tutti i dati e li valorizzo in una variabile
         $postData = $request->all();
+        Storage::delete($post->cover);
+        $img_path = Storage::put("uploads", $postData["image"]);
+        $postData["cover"] = $img_path;
         // li inserisco all'interno della tabella, compreso lo slug
         $post->fill($postData);
         $post->slug = Post::generateSlug($post->title);

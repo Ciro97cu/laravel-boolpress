@@ -37,6 +37,10 @@
         @enderror
     </div>
     <div class="form-group">
+        <label for="image">Immagine</label>
+        <input type="file" name="image" />
+    </div>
+    <div class="form-group">
         <label for="category_id">Categoria</label>
         <select name="category_id" class="@error('category_id') is-invalid @enderror">
             <option hidden>Seleziona la categoria</option>

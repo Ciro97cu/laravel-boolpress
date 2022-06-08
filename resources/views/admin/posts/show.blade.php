@@ -9,6 +9,12 @@
         <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">Tutti i post</a>
     </div>
 </div>
+<h3>Immagine</h3>
+<div class="row pb-3">
+    <div class="col-6">
+        <img class="w-100" src="{{ asset("storage/" . $post->cover) }}" alt="detail image">
+    </div>
+</div>
 <div>
     <h3>Titolo</h3>
     <p>{{$post->title}}</p>

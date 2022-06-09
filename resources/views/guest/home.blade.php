@@ -1,4 +1,4 @@
 @extends('layouts/front-app')
 @section('content')
-    Non connesso
+    Non connesso.
 @endsection

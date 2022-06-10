@@ -8,12 +8,6 @@ require('./bootstrap');
 
 window.axios = require("axios");
 
-window.axios.get("/api/posts").then(results => {
-    console.log(results)
-}).catch(e => {
-    console.log(e)
-})
-
 window.Vue = require('vue');
 
 /**

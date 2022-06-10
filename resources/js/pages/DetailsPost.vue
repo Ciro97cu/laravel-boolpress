@@ -1,9 +1,25 @@
 <template>
-  <div class="row justify-content-center">
-    <div v-if="detail">
-      {{ detail.title }}
+  <div class="container py-4">
+    <div class="row">
+      <div v-if="detail" class="col-12">
+        <h1>Visualizzazione post {{ detail.id }}</h1>
+        <h3>Immagine</h3>
+        <div class="wrapper_img">
+          <img
+            class="w-100"
+            :src="'/storage/' + detail.cover"
+            :alt="detail.title"
+          />
+        </div>
+        <h3>Titolo</h3>
+        <p>{{ detail.title }}</p>
+        <h3>Slug</h3>
+        <p>{{ detail.slug }}</p>
+        <h3>Contenuto</h3>
+        <p>{{ detail.content }}</p>
+      </div>
+      <div v-else>Caricamento in corso</div>
     </div>
-    <div v-else>Caricamento in corso</div>
   </div>
 </template>
 
@@ -29,5 +45,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.wrapper_img {
+  width: 500px;
+}
 </style>

@@ -32,9 +32,9 @@ export default {
     };
   },
   mounted() {
-    const id = this.$route.params.id;
+    const slug = this.$route.params.slug;
     window.axios
-      .get("/api/posts/" + id)
+      .get("/api/posts/" + slug)
       .then((results) => {
         this.detail = results.data;
       })

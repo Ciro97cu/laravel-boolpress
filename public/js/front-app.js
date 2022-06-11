@@ -2093,8 +2093,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    var id = this.$route.params.id;
-    window.axios.get("/api/posts/" + id).then(function (results) {
+    var slug = this.$route.params.slug;
+    window.axios.get("/api/posts/" + slug).then(function (results) {
       _this.detail = results.data;
     })["catch"](function (e) {
       console.log(e);
@@ -2170,6 +2170,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostsComponent",
@@ -2178,17 +2197,37 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      arrayPost: []
+      arrayPost: [],
+      currentPage: 1,
+      lastPage: 1,
+      previousPage: "",
+      nextPage: ""
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    loadPage: function loadPage(url) {
+      var _this = this;
 
-    window.axios.get("/api/posts").then(function (results) {
-      _this.arrayPost = results.data;
-    })["catch"](function (e) {
-      console.log(e);
-    });
+      window.axios.get(url).then(function (results) {
+        _this.arrayPost = results.data.data;
+        _this.currentPage = results.data.current_page;
+        _this.lastPage = results.data.last_page;
+        _this.previousPage = results.data.prev_page_url;
+        _this.nextPage = results.data.next_page_url;
+        console.log(results);
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    goPreviousPage: function goPreviousPage() {
+      this.loadPage(this.previousPage);
+    },
+    goNextPage: function goNextPage() {
+      this.loadPage(this.nextPage);
+    }
+  },
+  mounted: function mounted() {
+    this.loadPage("/api/posts");
   }
 });
 
@@ -38671,7 +38710,9 @@ var render = function () {
                 "router-link",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { to: { name: "details", params: { id: post.id } } },
+                  attrs: {
+                    to: { name: "details", params: { slug: post.slug } },
+                  },
                 },
                 [_vm._v("Dettaglio")]
               ),
@@ -38836,7 +38877,49 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _vm.arrayPost.length > 0
-      ? _c("div", [_c("PostCard", { attrs: { posts: _vm.arrayPost } })], 1)
+      ? _c(
+          "div",
+          [
+            _c("PostCard", { attrs: { posts: _vm.arrayPost } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { disabled: !_vm.previousPage },
+                  on: {
+                    click: function ($event) {
+                      return _vm.goPreviousPage()
+                    },
+                  },
+                },
+                [_vm._v("\n        Prev\n      ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "p-2 mx-2 text-white rounded bg-primary" },
+                [_vm._v(_vm._s(_vm.currentPage) + " - " + _vm._s(_vm.lastPage))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { disabled: !_vm.nextPage },
+                  on: {
+                    click: function ($event) {
+                      return _vm.goNextPage()
+                    },
+                  },
+                },
+                [_vm._v("\n        Next\n      ")]
+              ),
+            ]),
+          ],
+          1
+        )
       : _c("div", [_vm._v("Caricamento in corso")]),
   ])
 }
@@ -54939,7 +55022,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "posts",
     component: _pages_PostsComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
-    path: "/posts/:id",
+    path: "/posts/:slug",
     name: "details",
     component: _pages_DetailsPost__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {

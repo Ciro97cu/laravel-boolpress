@@ -15,7 +15,7 @@
           {{ post.content }}
         </p>
         <router-link
-          :to="{ name: 'details', params: { id: post.id } }"
+          :to="{ name: 'details', params: { slug: post.slug } }"
           class="btn btn-primary"
           >Dettaglio</router-link
         >

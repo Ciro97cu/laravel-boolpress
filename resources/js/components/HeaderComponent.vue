@@ -18,9 +18,11 @@
         <router-link class="nav-link" :to="{ name: 'posts' }"
           >Posts</router-link
         >
+        <router-link class="nav-link" :to="{ name: 'categories' }"
+          >Categories</router-link
+        >
 
         <a class="nav-link disabled">Pricing</a>
-        <a class="nav-link disabled">Disabled</a>
       </div>
     </div>
   </nav>

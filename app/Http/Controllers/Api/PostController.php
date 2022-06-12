@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(3);
+        $posts = Post::with("Category", "Tag")->paginate(3);
         return response()->json($posts);
     }
 
@@ -48,7 +48,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::where("slug", $slug)->first();
+        $post = Post::with("Category", "Tag")->where("slug", $slug)->first();
         return response()->json($post);
     }
 

@@ -30,9 +30,6 @@ export default {
   props: {
     posts: Array,
   },
-  mounted() {
-    console.log(this.posts);
-  },
 };
 </script>
 

@@ -1,9 +1,9 @@
 <template>
   <div class="container py-4">
-    <div class="row">
-      <div v-if="detail" class="col-12">
-        <h1>Visualizzazione post {{ detail.id }}</h1>
-        <h3>Immagine</h3>
+    <div class="row justify-content-center">
+      <div v-if="detail" class="col-6">
+        <h1 class="text-center pb-3">Visualizzazione post {{ detail.id }}</h1>
+        <h1 class="text-center">{{ detail.title }}</h1>
         <div class="wrapper_img">
           <img
             class="w-100"
@@ -11,12 +11,14 @@
             :alt="detail.title"
           />
         </div>
-        <h3>Titolo</h3>
-        <p>{{ detail.title }}</p>
-        <h3>Slug</h3>
-        <p>{{ detail.slug }}</p>
         <h3>Contenuto</h3>
         <p>{{ detail.content }}</p>
+        <h3>Categorie</h3>
+        <p>{{ detail.category.name }}</p>
+        <h3>Tags</h3>
+        <span class="mr-2" v-for="tag in detail.tag" :key="tag.id">{{
+          tag.name
+        }}</span>
       </div>
       <div v-else>Caricamento in corso</div>
     </div>

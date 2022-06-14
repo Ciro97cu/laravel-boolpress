@@ -22,7 +22,9 @@
           >Categories</router-link
         >
 
-        <a class="nav-link disabled">Pricing</a>
+        <router-link class="nav-link" :to="{ name: 'contacts' }"
+          >Contacts</router-link
+        >
       </div>
     </div>
   </nav>

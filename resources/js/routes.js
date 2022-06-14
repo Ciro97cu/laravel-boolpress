@@ -9,6 +9,7 @@ import PostsComponent from "./pages/PostsComponent"
 import DetailsPost from "./pages/DetailsPost"
 import CategoriesComponent from "./pages/CategoriesComponent"
 import PostCategory from "./pages/PostCategory"
+import ContactsComponent from "./pages/ContactsComponent"
 import NotFound from "./pages/NotFound"
 
 const router = new VueRouter({
@@ -38,6 +39,11 @@ const router = new VueRouter({
             path: "/categories/:id",
             name: "postCategory",
             component: PostCategory
+        },
+        {
+            path: "/contacts",
+            name: "contacts",
+            component: ContactsComponent
         },
         {
             path: "/*",
